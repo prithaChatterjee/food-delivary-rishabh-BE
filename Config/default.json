@@ -1,0 +1,4 @@
+{
+    "jwt": "delivary_user_jwt",
+    "database": "mongodb://localhost:27017/onlineItems"
+}
