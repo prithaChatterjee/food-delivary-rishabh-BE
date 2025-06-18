@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
 const cors = require("cors")
-app.use(cors())
+app.use(cors({
+  exposedHeaders: ['X-Auth-Token']  // 👈 necessary to access it in frontend JS
+}));
 require("./startup/db")()
 require("./startup/router")(app)
 require("./startup/config")()

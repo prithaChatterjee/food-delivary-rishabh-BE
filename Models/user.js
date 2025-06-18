@@ -45,9 +45,9 @@ const createUser = async function (body) {
 const loginUser = async function (body) {
     const { email, password } = body
     const user = await User.findUserDetails({ email })
-    if (!user) return { code: 400, result: "user not found" }
+    if (!user) return { code: 400, result: "InValid Credential" }
     const login = await bcrypt.compare(password, user.password)
-    if (!login) return { code: 400, result: "eamil id or password can't match" }
+    if (!login) return { code: 400, result: "InValid Credential" }
     const token = new User(user).generateToken()
     return { code: 200, result: user, token }
 }
@@ -55,3 +55,4 @@ const loginUser = async function (body) {
 
 module.exports.createUser = createUser
 module.exports.loginUser = loginUser
+module.exports.User = User
