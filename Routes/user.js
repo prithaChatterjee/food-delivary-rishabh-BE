@@ -1,6 +1,6 @@
 const express = require("express")
 const asyncMiddleware = require("../Middleware/asyncMiddleware")
-const { createUser, loginUser } = require("../Models/user")
+const { createUser, loginUser, editUser } = require("../Models/user")
 const auth = require("../Middleware/auth")
 const router = express.Router()
 
@@ -19,8 +19,16 @@ router.post("/login", asyncMiddleware(async function (req, res) {
 }))
 
 router.get("/profile", auth, asyncMiddleware(async function (req, res) {
-    const user = req.user
-    res.send(user)
-}))
+  const user = req.user;
+  const userObj = user.toObject();
+  delete userObj.password;
+  res.send(userObj);
+}));
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await editUser(id, req.body);
+  res.status(response.code).json(response.result);
+});
 
 module.exports = router
